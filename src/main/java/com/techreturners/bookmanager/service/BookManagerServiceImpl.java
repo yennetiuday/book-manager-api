@@ -22,4 +22,9 @@ public class BookManagerServiceImpl implements BookManagerService {
         bookManagerRepository.findAll().forEach(books::add);
         return books;
     }
+
+    @Override
+    public Book insertBook(Book book) {
+        return bookManagerRepository.save(book);
+    }
 }

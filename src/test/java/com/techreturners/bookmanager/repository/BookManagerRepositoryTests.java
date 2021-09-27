@@ -26,4 +26,13 @@ public class BookManagerRepositoryTests {
 
     }
 
+    @Test
+    public void testAddABook() {
+        Book book = new Book(2L, "Book Two", "This is the description for Book Two", "Person Two", Genre.Fantasy);
+        bookManagerRepository.save(book);
+
+        var bookById = bookManagerRepository.findById(2L);
+        assertThat(bookById).isNotNull();
+    }
+
 }
