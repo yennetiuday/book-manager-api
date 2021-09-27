@@ -1,5 +1,6 @@
 package com.techreturners.bookmanager.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techreturners.bookmanager.model.Book;
 import com.techreturners.bookmanager.model.Genre;
 import com.techreturners.bookmanager.service.BookManagerServiceImpl;
@@ -10,6 +11,7 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -18,7 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -33,9 +35,12 @@ public class BookManagerControllerTests {
     @Autowired
     private MockMvc mockMvcController;
 
+    private ObjectMapper mapper;
+
     @BeforeEach
     public void setup(){
         mockMvcController = MockMvcBuilders.standaloneSetup(bookManagerController).build();
+        mapper = new ObjectMapper();
     }
 
     @Test
@@ -57,6 +62,22 @@ public class BookManagerControllerTests {
             .andExpect(MockMvcResultMatchers.jsonPath("$[1].title").value("Book Two"))
             .andExpect(MockMvcResultMatchers.jsonPath("$[2].id").value(3))
             .andExpect(MockMvcResultMatchers.jsonPath("$[2].title").value("Book Three"));
+    }
+
+    @Test
+    public void testPostMappingAddABook() throws Exception {
+
+        Book book = new Book(4L, "Book Four", "This is the description for Book Four", "Person Four", Genre.Fantasy);
+
+        when(mockBookManagerServiceImpl.insertBook(any())).thenReturn(book);
+
+        this.mockMvcController.perform(
+                MockMvcRequestBuilders.post("/api/v1/book/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(book)))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+
+        verify(mockBookManagerServiceImpl, times(1)).insertBook(any());
     }
 
 }

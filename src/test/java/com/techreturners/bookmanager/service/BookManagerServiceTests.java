@@ -40,4 +40,16 @@ public class BookManagerServiceTests {
         assertThat(actualResult).isEqualTo(books);
     }
 
+    @Test
+    public void testAddABook() {
+
+        var book = new Book(4L, "Book Four", "This is the description for Book Four", "Person Four", Genre.Fantasy);
+
+        when(mockBookManagerRepository.save(book)).thenReturn(book);
+
+        Book actualResult = bookManagerServiceImpl.insertBook(book);
+
+        assertThat(actualResult).isEqualTo(book);
+    }
+
 }
