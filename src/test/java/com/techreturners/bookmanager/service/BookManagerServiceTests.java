@@ -11,9 +11,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @DataJpaTest
 public class BookManagerServiceTests {
@@ -48,6 +49,19 @@ public class BookManagerServiceTests {
         when(mockBookManagerRepository.save(book)).thenReturn(book);
 
         Book actualResult = bookManagerServiceImpl.insertBook(book);
+
+        assertThat(actualResult).isEqualTo(book);
+    }
+
+    @Test
+    public void testGetBookById() {
+
+        Long bookId = 5L;
+        var book = new Book(5L, "Book Five", "This is the description for Book Five", "Person Five", Genre.Fantasy);
+
+        when(mockBookManagerRepository.findById(bookId)).thenReturn(Optional.of(book));
+
+        Book actualResult = bookManagerServiceImpl.getBookById(bookId);
 
         assertThat(actualResult).isEqualTo(book);
     }
