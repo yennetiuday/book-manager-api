@@ -27,12 +27,12 @@ public class BookManagerRepositoryTests {
     }
 
     @Test
-    public void testFindBookByIdReturnsBook() {
+    public void testCreatesAndFindBookByIdReturnsBook() {
 
         Book book = new Book(2L, "Book Two", "This is the description for Book Two", "Person Two", Genre.Fantasy);
         bookManagerRepository.save(book);
 
-        var bookById = bookManagerRepository.findById(2L);
+        var bookById = bookManagerRepository.findById(book.getId());
         assertThat(bookById).isNotNull();
 
     }

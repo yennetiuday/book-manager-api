@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @DataJpaTest
 public class BookManagerServiceTests {
@@ -56,8 +56,8 @@ public class BookManagerServiceTests {
     @Test
     public void testGetBookById() {
 
-        Long bookId = 4L;
-        var book = new Book(4L, "Book Four", "This is the description for Book Four", "Person Four", Genre.Fantasy);
+        Long bookId = 5L;
+        var book = new Book(5L, "Book Five", "This is the description for Book Five", "Person Five", Genre.Fantasy);
 
         when(mockBookManagerRepository.findById(bookId)).thenReturn(Optional.of(book));
 
