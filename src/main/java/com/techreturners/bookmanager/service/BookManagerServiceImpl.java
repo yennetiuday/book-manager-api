@@ -27,4 +27,10 @@ public class BookManagerServiceImpl implements BookManagerService {
     public Book insertBook(Book book) {
         return bookManagerRepository.save(book);
     }
+
+    @Override
+    public Book getBookById(Long id) {
+        return bookManagerRepository.findById(id).get();
+    }
+
 }

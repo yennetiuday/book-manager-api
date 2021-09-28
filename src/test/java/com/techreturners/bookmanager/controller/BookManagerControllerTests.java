@@ -65,11 +65,25 @@ public class BookManagerControllerTests {
     }
 
     @Test
+    public void testGetMappingGetBookById() throws Exception {
+
+        Book book = new Book(4L, "Book Four", "This is the description for Book Four", "Person Four", Genre.Fantasy);
+
+        when(mockBookManagerServiceImpl.getBookById(book.getId())).thenReturn(book);
+
+        this.mockMvcController.perform(
+            MockMvcRequestBuilders.get("/api/v1/book/" + book.getId()))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(4))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Book Four"));
+    }
+
+    @Test
     public void testPostMappingAddABook() throws Exception {
 
         Book book = new Book(4L, "Book Four", "This is the description for Book Four", "Person Four", Genre.Fantasy);
 
-        when(mockBookManagerServiceImpl.insertBook(any())).thenReturn(book);
+        when(mockBookManagerServiceImpl.insertBook(book)).thenReturn(book);
 
         this.mockMvcController.perform(
                 MockMvcRequestBuilders.post("/api/v1/book/")
@@ -77,7 +91,7 @@ public class BookManagerControllerTests {
                 .content(mapper.writeValueAsString(book)))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
 
-        verify(mockBookManagerServiceImpl, times(1)).insertBook(any());
+        verify(mockBookManagerServiceImpl, times(1)).insertBook(book);
     }
 
 }
