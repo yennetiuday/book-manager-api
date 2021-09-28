@@ -66,4 +66,19 @@ public class BookManagerServiceTests {
         assertThat(actualResult).isEqualTo(book);
     }
 
+    //User Story 4 - Update Book By Id Solution
+    @Test
+    public void testUpdateBookById() {
+
+        Long bookId = 5L;
+        var book = new Book(5L, "Book Five", "This is the description for Book Five", "Person Five", Genre.Fantasy);
+
+        when(mockBookManagerRepository.findById(bookId)).thenReturn(Optional.of(book));
+        when(mockBookManagerRepository.save(book)).thenReturn(book);
+
+        bookManagerServiceImpl.updateBookById(bookId, book);
+
+        verify(mockBookManagerRepository, times(1)).save(book);
+    }
+
 }
