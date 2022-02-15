@@ -30,6 +30,16 @@ using a Test-Driven Development approach.
 
 Here are some tasks for you to work on:
 
+📘 Discussion Task
+
+Explore the code and make notes on the following features and how it is being implemented in the code. We'd like you to note down what classes and methods are used and how the objects interact.
+
+The features are:
+- Get All Books
+- Get a Book by ID
+- Add a Book
+- Update a Book
+
 📘 Task 1: Implement the following User Story with tests.
 
 `User Story: As a user, I want to use the Book Manager API to delete a book using its ID`
