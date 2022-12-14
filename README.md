@@ -5,7 +5,7 @@ This is the starter repository for the Further APIs session. It provides a start
 using a Test-Driven Development approach.
 
 ### Pre-Requisites
-- Java SE Development Kit 11
+- Java SE Development Kit 17
 - Maven
 
 ### Technologies & Dependencies
