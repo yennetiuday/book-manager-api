@@ -15,7 +15,6 @@ import lombok.Builder;
 public class Book {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue
     @Column(updatable = false, nullable = false)
     Long id;
